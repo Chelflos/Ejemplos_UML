@@ -1,0 +1,51 @@
+@startuml
+skinparam actorStyle awesome
+left to right direction
+
+:USUARIO: as Usuario
+usecase "REGISTRAR COMO SOCIO" as REGISTRAR
+Usuario --> REGISTRAR #blue
+
+:SOCIO: as Socio 
+REGISTRAR -> Socio
+usecase "HACER PEDIDO" as COMPRAR
+usecase "CANCELAR PEDIDO" as CANCELAR
+usecase "HACER PAGO" as PAGAR
+usecase "VISUALIZAR PEDIDOS" as VISUALIZAR
+
+:ENTIDAD BANCARIA: as BANCO
+(COMPROBAR TARJETA) as (COMPROBAR)
+
+Socio --> COMPRAR #green
+COMPRAR --> (PAGAR) #green 
+PAGAR --> COMPROBAR #orange
+Socio --> VISUALIZAR #green
+COMPROBAR --> VISUALIZAR #green
+VISUALIZAR --> CANCELAR #red
+
+
+BANCO --> COMPROBAR #Orange
+:ADMIN TIENDA: as AdminT
+usecase "BAJA CAMPAÑA" as baja
+usecase "ALTA CAMPAÑA" as alta
+AdminT -->baja
+AdminT -->alta
+
+:EMPLEADO ALMACEN: as E.ALM
+usecase "CUMPLIMENTAR PEDIDO" as PEDIDOOK
+usecase "ALMACENAR PEDIDO" as ALMACENADO
+E.ALM --> PEDIDOOK
+PEDIDOOK --> ALMACENADO
+
+
+:EMPRESA REPARTOS: as REPARTOS
+usecase "RECOGER PEDIDO" as RECOGIDO
+usecase "ASIGNAR RUTA" as RUTA
+usecase "ASIGNAR FECHA DE REPARTO" as FECHA
+usecase "CREAR INCIDENCIA" as INCIDENCIA
+
+REPARTOS --> RECOGIDO
+RECOGIDO --> RUTA
+RECOGIDO --> FECHA 
+RECOGIDO --> INCIDENCIA
+@enduml
